@@ -1,0 +1,77 @@
+<mat-divider [vertical]="true" style="margin: 3vh 0;"></mat-divider>
+
+<div class="container" style="width: 70vw; margin: 0 auto;">
+
+    <mat-toolbar color=#000000>
+        <button mat-flat-button color=#5f5f5f (click)="refresh()"><mat-icon>refresh</mat-icon> Oldal frissítése</button>
+        <span style="flex: 1 1 auto;"></span>
+        <h1>Tagok</h1>
+    </mat-toolbar>
+
+    <mat-divider [vertical]="true" style="margin: 2vh 0;"></mat-divider>
+
+    @if(authService.isLoggedIn()) {
+        <button mat-flat-button color="accent" (click)="openDialog()" style="width: 10vw;"><mat-icon>add</mat-icon>Tag hozzáadása</button>
+    }
+
+    <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="square-loader" [fullScreen]="true">
+        <p style="color: white">Tagok betöltése...</p>
+    </ngx-spinner>
+
+    <mat-form-field appearance="fill" style="width: 30vw; margin: 2vh;">
+        <mat-label>Tag keresése</mat-label>
+        <input matInput (keyup)="filterChange($event)" placeholder="Tag keresése">
+    </mat-form-field>
+
+<mat-divider [vertical]="true"></mat-divider>
+
+    <div class="mat-elevation-z10">
+        <mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                <mat-cell *matCellDef="let member">{{ member.id }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Név</mat-header-cell>
+                <mat-cell *matCellDef="let member" >{{ member.name }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="phoneNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Telefonszám</mat-header-cell>
+                <mat-cell *matCellDef="let member">{{ member.phoneNumber }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="idCardNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Személyig. szám</mat-header-cell>
+                <mat-cell *matCellDef="let member">{{ member.idCardNumber }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="address">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Lakcím</mat-header-cell>
+                <mat-cell *matCellDef="let member">{{ member.address }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Státusz</mat-header-cell>
+                <mat-cell *matCellDef="let member">{{ member.status }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>Műveletek</mat-header-cell>
+                <mat-cell *matCellDef="let member">
+                    @if(authService.isLoggedIn()) {
+                        <button mat-icon-button matTooltip="Módosítás" (click)="editMember(member)"><mat-icon color="primary">edit</mat-icon></button>
+                        <button mat-icon-button matTooltip="Törlés" (click)="deleteMember(member.id)"><mat-icon color="warn">delete</mat-icon></button>
+                    }
+                </mat-cell>
+            </ng-container>  
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>    
+
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons></mat-paginator>
+    </div>
+</div>

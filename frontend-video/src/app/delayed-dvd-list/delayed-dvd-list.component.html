@@ -1,0 +1,61 @@
+<mat-divider [vertical]="true" style="margin: 3vh 0;"></mat-divider>
+
+<div class="container" style="width: 70vw; margin: 0 auto;">
+
+  <mat-toolbar color=#000000>
+    <button mat-flat-button color=#5f5f5f (click)="refresh()"><mat-icon>refresh</mat-icon> Oldal frissítése</button>
+    <span style="flex: 1 1 auto;"></span>
+    <h1>Késések DVD-kel</h1>
+  </mat-toolbar>
+
+  <mat-divider [vertical]="true" style="margin: 2vh 0;"></mat-divider>
+
+  <ngx-spinner bdColor="rgba(0, 0, 0, 0.8)" size="large" color="#fff" type="square-loader" [fullScreen]="true">
+      <p style="color: white">Késések betöltése...</p>
+  </ngx-spinner>
+
+  <mat-form-field appearance="fill" style="width: 30vw; margin: 2vh;">
+    <mat-label>DVD keresése</mat-label>
+    <input matInput (keyup)="filterChange($event)" placeholder="DVD keresése">
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" matSort (matSortChange)="announceSortChange($event)">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ borrow.id }}</mat-cell>
+      </ng-container>
+ 
+      <ng-container matColumnDef="borrowDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>Kölcsönzés dátuma</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ borrow.borrowDate | date: 'yyyy-MM-dd HH:mm:ss' }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="returnDate">
+        <mat-header-cell *matHeaderCellDef>Visszaadás dátuma</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ borrow.returnDate | date: 'yyyy-MM-dd HH:mm:ss' }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="member">
+        <mat-header-cell *matHeaderCellDef>Kölcsönző neve</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ borrow.member.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="dvd">
+        <mat-header-cell *matHeaderCellDef>DVD</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ borrow.dvd?.title }}</mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="delay">
+        <mat-header-cell *matHeaderCellDef>Késés</mat-header-cell>
+        <mat-cell *matCellDef="let borrow">{{ calculateDelay(borrow) }} nap</mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[2, 4, 6, 8, 10]" showFirstLastButtons></mat-paginator>
+  </div>
+  
+</div>
+

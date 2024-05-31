@@ -1,0 +1,22 @@
+.image-container {
+    overflow: hidden;
+    position: relative; 
+    width: 100%;
+    height: auto; 
+  }
+  
+.slide-in {
+    animation: slideInOut 0.4s ease-out;
+}
+  
+@keyframes slideInOut {
+    0% {
+      transform: translateX(-100%);
+      opacity: 0; 
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+}
+  

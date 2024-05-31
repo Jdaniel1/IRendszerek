@@ -1,0 +1,49 @@
+<h1 mat-dialog-title>{{ dialogTitle }}</h1>
+
+<div mat-dialog-content [formGroup]="cassetteForm">
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Szerző</mat-label>
+        <input matInput placeholder="Szerző neve" id="author" formControlName="author">
+        <mat-error *ngIf="cassetteForm.get('author')?.invalid && cassetteForm.get('author')?.dirty">
+            {{errorMessage.author}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Cím</mat-label>
+        <input matInput placeholder="Kazetta címe" id="title" formControlName="title">
+        <mat-error *ngIf="cassetteForm.get('title')?.invalid && cassetteForm.get('title')?.dirty">
+            {{errorMessage.title}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Beszerzés dátuma</mat-label>
+        <input matInput placeholder="Beszerzés dátuma" id="acquisitionDate" formControlName="acquisitionDate">
+        <mat-error *ngIf="cassetteForm.get('acquisitionDate')?.invalid && cassetteForm.get('acquisitionDate')?.dirty">
+            {{errorMessage.acquisitionDate}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Szériaszám</mat-label>
+        <input matInput placeholder="Szériaszám" id="serialNumber" formControlName="serialNumber">
+        <mat-error *ngIf="cassetteForm.get('serialNumber')?.invalid && cassetteForm.get('serialNumber')?.dirty">
+            {{errorMessage.serialNumber}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Státusz</mat-label>
+        <mat-select placeholder="Státusz" formControlName="status">
+            <mat-option value="Szabad">Szabad</mat-option>
+            <mat-option value="Kikölcsönzött">Kikölcsönzött</mat-option>
+            <mat-option value="Selejtezett">Selejtezett</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close style="width: 10vh;" (click)="cancel()">Mégse</button>
+    <button mat-raised-button color="primary" style="margin-left: 2vh; width: 10vh;" (click)="save()">{{ actionBtn }}</button>
+</div>

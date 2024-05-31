@@ -1,0 +1,32 @@
+<h1 mat-dialog-title>{{ dialogTitle }}</h1>
+
+<div mat-dialog-content [formGroup]="borrowForm">
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Tag ID</mat-label>
+        <input matInput placeholder="Tag ID" id="member" formControlName="member">
+        <mat-error *ngIf="borrowForm.get('member')?.invalid && borrowForm.get('member')?.dirty">
+            {{errorMessage.member}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Kölcsönzés dátuma</mat-label>
+        <input matInput placeholder="Kölcsönzés dátuma" id="borrowDate" formControlName="borrowDate">
+        <mat-error *ngIf="borrowForm.get('borrowDate')?.invalid && borrowForm.get('borrowDate')?.dirty">
+            {{errorMessage.borrowDate}}
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" style="width: 100%;">
+        <mat-label>Kazetta ID</mat-label>
+        <input matInput placeholder="Kazetta ID" id="cassette" formControlName="cassette">
+        <mat-error *ngIf="borrowForm.get('cassette')?.invalid && borrowForm.get('cassette')?.dirty">
+            {{errorMessage.cassette}}
+        </mat-error>
+    </mat-form-field>
+</div>
+
+<div mat-dialog-actions [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close style="width: 10vh;" (click)="cancel()">Mégse</button>
+    <button mat-raised-button color="primary" style="margin-left: 2vh; width: 10vh;" (click)="save()">{{ actionBtn }}</button>
+</div>
